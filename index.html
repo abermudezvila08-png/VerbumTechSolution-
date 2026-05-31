@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Verbum Tech Solution — Arquitectura y entrega de aplicaciones a la medida para TCP, MiPYMEs, cooperativas y emprendedores."/>
+<title>Verbum Tech Solution</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#080808;
+  --black2:#0f0f0f;
+  --black3:#181818;
+  --orange:#e8750a;
+  --orange2:#f5920a;
+  --gold:#c9a227;
+  --gold2:#e8c45a;
+  --gold3:#f5e098;
+  --text:#f2ede4;
+  --muted:#7a7060;
+  --border:rgba(201,162,39,0.15);
+  --radius:2px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:.4;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:2px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--gold);}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  padding:1.25rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(8,8,8,.95),transparent);
+  backdrop-filter:blur(8px);
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold2);
+}
+.nav-brand span{color:var(--orange);font-weight:300;font-style:italic;}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links a{
+  font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--gold2);}
+.nav-cta{
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--gold);
+  color:var(--gold2);padding:.5rem 1.25rem;
+  border-radius:var(--radius);cursor:pointer;
+  transition:all .25s;text-decoration:none;
+}
+.nav-cta:hover{background:var(--gold);color:var(--black);}
+.nav-mobile{display:none;background:none;border:none;color:var(--gold2);font-size:1.4rem;cursor:pointer;}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 2rem 4rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(201,162,39,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(232,117,10,.05) 0%, transparent 50%),
+    linear-gradient(170deg, #080808 0%, #0d0a06 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,162,39,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,162,39,.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+.hero-content{
+  position:relative;max-width:900px;
+}
+.hero-eyebrow{
+  font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:2rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.hero-eyebrow::before{
+  content:'';display:inline-block;width:32px;height:1px;background:var(--orange);
+}
+.hero-h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,8vw,6.5rem);
+  font-weight:300;line-height:1.05;
+  letter-spacing:-.02em;
+  margin-bottom:2rem;
+}
+.hero-h1 em{
+  font-style:italic;color:var(--gold2);
+  display:block;
+}
+.hero-h1 strong{
+  font-weight:600;color:var(--text);
+}
+.hero-sub{
+  font-size:1rem;color:var(--muted);
+  line-height:1.7;max-width:540px;
+  margin-bottom:3rem;font-weight:300;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.btn-primary{
+  background:linear-gradient(135deg,var(--orange),var(--orange2));
+  color:#fff;border:none;
+  padding:.85rem 2rem;
+  font-family:'Outfit',sans-serif;
+  font-size:.8rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  border-radius:var(--radius);cursor:pointer;
+  text-decoration:none;display:inline-block;
+  transition:all .25s;
+}
+.btn-primary:hover{filter:brightness(1.15);transform:translateY(-1px);}
+.btn-ghost{
+  background:transparent;
+  border:1px solid rgba(201,162,39,.3);
+  color:var(--gold2);
+  padding:.85rem 2rem;
+  font-family:'Outfit',sans-serif;
+  font-size:.8rem;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;
+  border-radius:var(--radius);cursor:pointer;
+  text-decoration:none;display:inline-block;
+  transition:all .25s;
+}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(201,162,39,.06);}
+.hero-stats{
+  position:absolute;bottom:3rem;right:2rem;
+  display:flex;gap:3rem;
+}
+.stat{text-align:right;}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;font-weight:300;
+  color:var(--gold2);line-height:1;
+}
+.stat-label{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.25rem;}
+
+/* ── SECTIONS ── */
+section{padding:6rem 2rem;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-tag{
+  font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--orange);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.section-tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--orange);}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:300;line-height:1.1;
+  margin-bottom:1.5rem;
+  letter-spacing:-.01em;
+}
+.section-title em{color:var(--gold2);font-style:italic;}
+.section-sub{font-size:.9rem;color:var(--muted);max-width:520px;line-height:1.7;}
+
+/* ── DIVIDER ── */
+.divider{
+  height:1px;
+  background:linear-gradient(to right, transparent, var(--border), transparent);
+  margin:0 2rem;
+}
+
+/* ── SERVICIOS ── */
+#servicios{background:var(--black2);}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1px;
+  margin-top:4rem;
+  border:1px solid var(--border);
+}
+.service-card{
+  background:var(--black2);
+  padding:2.5rem 2rem;
+  position:relative;overflow:hidden;
+  transition:background .25s;
+}
+.service-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--orange),var(--gold));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .35s ease;
+}
+.service-card:hover{background:var(--black3);}
+.service-card:hover::before{transform:scaleX(1);}
+.service-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:300;
+  color:rgba(201,162,39,.15);
+  line-height:1;margin-bottom:1.5rem;
+}
+.service-icon{font-size:1.5rem;margin-bottom:1rem;}
+.service-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:600;
+  color:var(--text);margin-bottom:.75rem;
+  letter-spacing:.02em;
+}
+.service-desc{font-size:.82rem;color:var(--muted);line-height:1.7;}
+.service-tag{
+  display:inline-block;
+  margin-top:1.25rem;
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);border:1px solid rgba(232,117,10,.25);
+  padding:.2rem .6rem;border-radius:var(--radius);
+}
+
+/* ── SECTORES ── */
+#sectores{position:relative;}
+.sectors-wrap{
+  display:flex;gap:1rem;flex-wrap:wrap;margin-top:3rem;
+}
+.sector-pill{
+  padding:.6rem 1.5rem;
+  border:1px solid var(--border);
+  border-radius:40px;
+  font-size:.78rem;color:var(--muted);
+  letter-spacing:.05em;
+  transition:all .2s;cursor:default;
+}
+.sector-pill:hover{border-color:var(--gold);color:var(--gold2);}
+.sector-pill.featured{
+  border-color:rgba(232,117,10,.4);color:var(--orange);
+  background:rgba(232,117,10,.06);
+}
+
+/* ── PRODUCTO ── */
+#producto{background:var(--black2);}
+.product-card{
+  margin-top:3rem;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+.product-info{padding:3rem;}
+.product-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);
+  color:#2ecc71;padding:.3rem .75rem;border-radius:20px;
+  margin-bottom:1.5rem;
+}
+.product-badge::before{content:'●';animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.product-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;font-weight:600;
+  color:var(--gold2);margin-bottom:.5rem;
+}
+.product-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;}
+.product-features{list-style:none;margin-bottom:2rem;}
+.product-features li{
+  font-size:.82rem;color:var(--text);
+  padding:.5rem 0;border-bottom:1px solid rgba(201,162,39,.08);
+  display:flex;align-items:flex-start;gap:.75rem;
+}
+.product-features li::before{content:'→';color:var(--orange);flex-shrink:0;}
+.product-visual{
+  background:linear-gradient(135deg,var(--black3),#0d0900);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;position:relative;overflow:hidden;
+  border-left:1px solid var(--border);
+}
+.product-visual::before{
+  content:'SIGELITE+AI';
+  position:absolute;
+  font-family:'Cormorant Garamond',serif;
+  font-size:6rem;font-weight:700;
+  color:rgba(201,162,39,.04);
+  letter-spacing:-.05em;
+  white-space:nowrap;
+  transform:rotate(-20deg);
+}
+.mockup{
+  width:160px;height:280px;
+  background:var(--black2);
+  border:1px solid rgba(201,162,39,.2);
+  border-radius:20px;
+  position:relative;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(201,162,39,.1);
+}
+.mockup-header{
+  background:linear-gradient(135deg,var(--orange),var(--orange2));
+  height:40px;display:flex;align-items:center;
+  padding:0 .75rem;gap:.4rem;
+}
+.mockup-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);}
+.mockup-content{padding:.75rem .5rem;}
+.mockup-line{height:4px;border-radius:2px;margin-bottom:.4rem;}
+.mockup-line.gold{background:rgba(201,162,39,.4);width:70%;}
+.mockup-line.orange{background:rgba(232,117,10,.3);width:50%;}
+.mockup-line.muted{background:rgba(122,112,96,.2);width:85%;}
+.mockup-card{
+  background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.15);
+  border-radius:4px;padding:.4rem .5rem;margin:.5rem 0;
+}
+.mockup-kpi{font-size:.55rem;color:var(--orange);letter-spacing:.05em;}
+.mockup-val{font-size:.9rem;font-weight:600;color:var(--gold2);line-height:1;}
+
+/* ── PROCESO ── */
+.process-steps{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:0;margin-top:3rem;
+  position:relative;
+}
+.process-steps::before{
+  content:'';position:absolute;top:24px;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,var(--border),var(--border),transparent);
+}
+.process-step{padding:0 1.5rem 2rem;position:relative;}
+.step-num{
+  width:48px;height:48px;border-radius:50%;
+  border:1px solid var(--border);
+  background:var(--black);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;color:var(--gold2);
+  margin-bottom:1.25rem;position:relative;z-index:1;
+}
+.step-title{font-size:.88rem;font-weight:500;color:var(--text);margin-bottom:.4rem;}
+.step-desc{font-size:.75rem;color:var(--muted);line-height:1.6;}
+
+/* ── CTA ── */
+#cta{
+  background:linear-gradient(135deg,#0d0900,#0a0800,var(--black));
+  text-align:center;padding:8rem 2rem;
+  position:relative;overflow:hidden;
+}
+#cta::before{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,162,39,.08),transparent 60%);
+  pointer-events:none;
+}
+.cta-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,6vw,4rem);
+  font-weight:300;line-height:1.1;
+  max-width:700px;margin:0 auto 1.5rem;
+}
+.cta-title em{color:var(--gold2);font-style:italic;}
+.cta-sub{font-size:.9rem;color:var(--muted);max-width:480px;margin:0 auto 3rem;line-height:1.7;}
+.cta-contact{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+.contact-item{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.78rem;color:var(--muted);
+  border:1px solid var(--border);
+  padding:.5rem 1rem;border-radius:var(--radius);
+  text-decoration:none;transition:all .2s;
+}
+.contact-item:hover{border-color:var(--gold);color:var(--gold2);}
+.contact-item .ico{color:var(--orange);}
+
+/* ── FOOTER ── */
+footer{
+  padding:2rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.9rem;color:var(--gold2);
+  letter-spacing:.1em;
+}
+.footer-copy{font-size:.7rem;color:var(--muted);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav{padding:1rem;}
+  .nav-links{display:none;}
+  .nav-mobile{display:block;}
+  #hero{padding:7rem 1.25rem 3rem;}
+  .hero-stats{position:static;margin-top:3rem;justify-content:flex-start;gap:2rem;}
+  .stat{text-align:left;}
+  section{padding:4rem 1.25rem;}
+  .product-card{grid-template-columns:1fr;}
+  .product-visual{display:none;}
+  .process-steps::before{display:none;}
+  .process-step{padding:.75rem 0;}
+  footer{flex-direction:column;text-align:center;}
+}
+
+/* ── ANIMATIONS ── */
+.fade-up{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Verbum <span>Tech</span> Solution</div>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#sectores">Sectores</a>
+    <a href="#producto">Producto</a>
+    <a href="#cta">Contacto</a>
+    <a href="https://abermudezvila08-png.github.io/SIGELITE-IA-/SIGELITE_AI.html" class="nav-cta" target="_blank">SIGELITE+AI →</a>
+  </div>
+  <button class="nav-mobile" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Verbum Tech Solution · Cuba & LATAM</div>
+    <h1 class="hero-h1">
+      <strong>Tecnología</strong>
+      <em>a la medida</em>
+      <strong>de tu realidad.</strong>
+    </h1>
+    <p class="hero-sub">
+      Arquitectura y entrega de aplicaciones para TCP, MiPYMEs, cooperativas y emprendedores. Soluciones reales para contextos reales — con IA, datos y conocimiento del marco legal local.
+    </p>
+    <div class="hero-actions">
+      <a href="#servicios" class="btn-primary">Ver servicios</a>
+      <a href="#cta" class="btn-ghost">Hablar con nosotros</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Aplicaciones desarrolladas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Mobile-first</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">IA</div>
+      <div class="stat-label">Integrada en cada solución</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <div class="section-tag">Servicios</div>
+    <h2 class="section-title">Lo que <em>construimos</em><br>para ti</h2>
+    <p class="section-sub">Cada solución es diseñada desde cero para tu caso específico. No vendemos plantillas — entregamos herramientas que funcionan.</p>
+
+    <div class="services-grid fade-up">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon">⚙</div>
+        <div class="service-title">Aplicaciones a la medida</div>
+        <div class="service-desc">Desarrollo de software personalizado para gestión operativa, inventarios, facturación, reportes y flujos de trabajo. Diseñadas para funcionar offline-first en entornos con conectividad limitada.</div>
+        <span class="service-tag">TCP · MiPYME · Cooperativa</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon">🌐</div>
+        <div class="service-title">Páginas web y plataformas</div>
+        <div class="service-desc">Presencia digital profesional, tiendas en línea, plataformas de servicios y catálogos. Diseño único, carga rápida, adaptadas al contexto de conectividad de LATAM.</div>
+        <span class="service-tag">Web · E-commerce · Catálogo</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon">🤖</div>
+        <div class="service-title">Inteligencia Artificial aplicada</div>
+        <div class="service-desc">Integración de IA en procesos reales: asistentes operativos, análisis de datos, automatización de tareas repetitivas y toma de decisiones basada en información.</div>
+        <span class="service-tag">IA · Automatización · Análisis</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-icon">⚖</div>
+        <div class="service-title">Marco legal y financiero</div>
+        <div class="service-desc">Soluciones que incorporan el marco normativo cubano vigente — fichas de costo, semáforos legales, control de precios y cumplimiento bajo las resoluciones del MFP.</div>
+        <span class="service-tag">Resolución 148 · Decreto-Ley 88</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-icon">🗺</div>
+        <div class="service-title">Mapeo y análisis de datos</div>
+        <div class="service-desc">Visualización geoespacial, dashboards de KPIs y análisis de información para la toma de decisiones estratégicas en organizaciones, territorios y proyectos.</div>
+        <span class="service-tag">GIS · Dashboard · KPIs</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-icon">📱</div>
+        <div class="service-title">Soluciones móviles</div>
+        <div class="service-desc">Aplicaciones que funcionan desde cualquier teléfono — sin instalar, sin internet estable, sincronizando cuando hay señal. Pensadas para el técnico en campo y el gestor en movimiento.</div>
+        <span class="service-tag">Android · PWA · Offline-first</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTORES -->
+<section id="servicios">
+  <div class="section-inner">
+    <div class="section-tag">Servicios</div>
+    <h2 class="section-title">Lo que <em>construimos</em><br>para ti</h2>
+    <p class="section-sub">Cada solución es diseñada desde cero para tu caso específico. No vendemos plantillas — entregamos herramientas que funcionan.</p>
+
+    <div class="services-grid fade-up">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon">⚙</div>
+        <div class="service-title">Aplicaciones a la medida</div>
+        <div class="service-desc">Desarrollo de software personalizado para gestión operativa, inventarios, facturación, reportes y flujos de trabajo. Diseñadas para funcionar offline-first en entornos con conectividad limitada.</div>
+        <span class="service-tag">TCP · MiPYME · Cooperativa</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon">🌐</div>
+        <div class="service-title">Páginas web y plataformas</div>
+        <div class="service-desc">Presencia digital profesional, tiendas en línea, plataformas de servicios y catálogos. Diseño único, carga rápida, adaptadas al contexto de conectividad de LATAM.</div>
+        <span class="service-tag">Web · E-commerce · Catálogo</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon">🤖</div>
+        <div class="service-title">Inteligencia Artificial aplicada</div>
+        <div class="service-desc">Integración de IA en procesos reales: asistentes operativos, análisis de datos, automatización de tareas repetitivas y toma de decisiones basada en información.</div>
+        <span class="service-tag">IA · Automatización · Análisis</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-icon">⚖</div>
+        <div class="service-title">Marco legal y financiero</div>
+        <div class="service-desc">Soluciones que incorporan el marco normativo cubano vigente — fichas de costo, semáforos legales, control de precios y cumplimiento bajo las resoluciones del MFP.</div>
+        <span class="service-tag">Resolución 148 · Decreto-Ley 88</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-icon">🗺</div>
+        <div class="service-title">Mapeo y análisis de datos</div>
+        <div class="service-desc">Visualización geoespacial, dashboards de KPIs y análisis de información para la toma de decisiones estratégicas en organizaciones, territorios y proyectos.</div>
+        <span class="service-tag">GIS · Dashboard · KPIs</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-icon">📱</div>
+        <div class="service-title">Soluciones móviles</div>
+        <div class="service-desc">Aplicaciones que funcionan desde cualquier teléfono — sin instalar, sin internet estable, sincronizando cuando hay señal. Pensadas para el técnico en campo y el gestor en movimiento.</div>
+        <span class="service-tag">Android · PWA · Offline-first</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTORES -->
+<section id="sectores">
+  <div class="section-inner">
+    <div class="section-tag">Sectores</div>
+    <h2 class="section-title">¿Para <em>quién</em><br>trabajamos?</h2>
+    <p class="section-sub">Cualquier organización que necesite transformar sus procesos con tecnología accesible, funcional y adaptada a su realidad.</p>
+    <div class="sectors-wrap fade-up">
+      <span class="sector-pill featured">TCP</span>
+      <span class="sector-pill featured">MiPYMEs privadas</span>
+      <span class="sector-pill featured">Cooperativas</span>
+      <span class="sector-pill featured">Emprendedores</span>
+      <span class="sector-pill">Empresas estatales</span>
+      <span class="sector-pill">Organizaciones de salud</span>
+      <span class="sector-pill">Sector educativo</span>
+      <span class="sector-pill">Comercio minorista</span>
+      <span class="sector-pill">Servicios técnicos</span>
+      <span class="sector-pill">Turismo y hostelería</span>
+      <span class="sector-pill">Logística y transporte</span>
+      <span class="sector-pill">Construcción</span>
+      <span class="sector-pill">Agropecuario</span>
+      <span class="sector-pill">LATAM general</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUCTO -->
+<section id="producto">
+  <div class="section-inner">
+    <div class="section-tag">Producto destacado</div>
+    <h2 class="section-title">SIGELITE<em>+AI</em></h2>
+    <p class="section-sub">Sistema de gestión operativa con inteligencia artificial integrada. Listo para usar desde el navegador, sin instalar nada.</p>
+
+    <div class="product-card fade-up">
+      <div class="product-info">
+        <div class="product-badge">En línea · Acceso inmediato</div>
+        <div class="product-name">SIGELITE+AI</div>
+        <div class="product-sub">Gestión operativa completa desde tu teléfono. Ingesta de archivos, entrada manual de datos, reportes en CSV, exportación ZIP y envío directo por correo.</div>
+        <ul class="product-features">
+          <li>Ingesta de archivos: Excel, Word, PDF, imágenes, CSV</li>
+          <li>Entrada manual de datos operativos, personal e inventario</li>
+          <li>Reportes estructurados descargables en CSV formal</li>
+          <li>Exportación ZIP organizada por cuentas y departamentos</li>
+          <li>Asistente IA integrado que funciona sin internet</li>
+          <li>Funciona offline — sincroniza cuando hay señal</li>
+          <li>Compatible con cualquier teléfono Android</li>
+        </ul>
+        <a href="https://abermudezvila08-png.github.io/SIGELITE-IA-/SIGELITE_AI.html" class="btn-primary" target="_blank">Probar ahora →</a>
+      </div>
+      <div class="product-visual">
+        <div class="mockup">
+          <div class="mockup-header">
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+          </div>
+          <div class="mockup-content">
+            <div class="mockup-line gold"></div>
+            <div class="mockup-line muted"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:.5rem 0;">
+              <div class="mockup-card"><div class="mockup-kpi">ARCHIVOS</div><div class="mockup-val">12</div></div>
+              <div class="mockup-card"><div class="mockup-kpi">REPORTES</div><div class="mockup-val">5</div></div>
+              <div class="mockup-card"><div class="mockup-kpi">ZIPs</div><div class="mockup-val">3</div></div>
+              <div class="mockup-card"><div class="mockup-kpi">ENVÍOS</div><div class="mockup-val">2</div></div>
+            </div>
+            <div class="mockup-line orange"></div>
+            <div class="mockup-line muted"></div>
+            <div class="mockup-line gold" style="width:45%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="section-inner">
+    <div class="section-tag">Cómo trabajamos</div>
+    <h2 class="section-title">Del problema<br>a la <em>solución</em></h2>
+    <div class="process-steps fade-up">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Escuchamos</div>
+        <div class="step-desc">Entendemos tu proceso real, tus limitaciones técnicas y lo que necesitas resolver. Sin tecnicismos.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Diseñamos</div>
+        <div class="step-desc">Arquitectura simple, funcional y adaptada a tu contexto — teléfono, conectividad limitada, marco legal local.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Entregamos</div>
+        <div class="step-desc">Un producto que funciona desde el primer día. Sin instalaciones complejas, sin curvas de aprendizaje largas.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Acompañamos</div>
+        <div class="step-desc">Soporte continuo, mejoras basadas en uso real y evolución del producto junto a tu negocio.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="section-inner">
+    <div class="section-tag" style="justify-content:center;">Contacto</div>
+    <h2 class="cta-title">¿Tienes un problema<br>que la tecnología<br>puede <em>resolver</em>?</h2>
+    <p class="cta-sub">Conversemos. Sin compromisos, sin tecnicismos. Solo dinos qué necesitas y encontramos la forma de construirlo.</p>
+    <a href="https://wa.me/5359671678" class="btn-primary" target="_blank">WhatsApp directo →</a>
+    <div class="cta-contact">
+      <a href="https://wa.me/5359671678" class="contact-item" target="_blank">
+        <span class="ico">📱</span> +53 59671678
+      </a>
+      <a href="mailto:verbumtechsolution@gmail.com" class="contact-item">
+        <span class="ico">✉</span> verbumtechsolution@gmail.com
+      </a>
+      <a href="https://abermudezvila08-png.github.io/SIGELITE-IA-/SIGELITE_AI.html" class="contact-item" target="_blank">
+        <span class="ico">⚡</span> SIGELITE+AI
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Verbum Tech Solution</div>
+  <div class="footer-copy">© 2026 · Cuba & LATAM · Tecnología a la medida de tu realidad</div>
+</footer>
+
+<script>
+// Fade up on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Mobile menu
+function toggleMenu(){
+  const links = document.querySelector('.nav-links');
+  if(links.style.display === 'flex'){
+    links.style.display = 'none';
+  } else {
+    links.style.display = 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '60px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'rgba(8,8,8,.98)';
+    links.style.padding = '1.5rem 2rem';
+    links.style.borderBottom = '1px solid rgba(201,162,39,.15)';
+    links.style.backdropFilter = 'blur(12px)';
+  }
+}
+// Close menu on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>
